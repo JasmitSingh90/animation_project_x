@@ -1,0 +1,42 @@
+//pubspec.yaml
+
+dependencies:
+  flutter:
+    sdk: flutter
+  webview_flutter: ^4.7.0
+  webview_flutter_android: ^3.16.0
+  webview_flutter_wkwebview: ^3.13.0
+
+flutter:
+  assets:
+    - assets/wave/         # includes index.html and the assets/ folder inside
+
+//
+
+quick reference for events
+
+// events for modes (IDLE, ACTIVE, PROCESSING)
+
+_ctrl.runJavaScript('window.dispatchEvent(new Event("wave:idle"))');
+_ctrl.runJavaScript('window.dispatchEvent(new Event("wave:processing"))');
+_ctrl.runJavaScript('window.dispatchEvent(new Event("wave:active"))');
+
+// or with explicit payload
+_ctrl.runJavaScript('window.dispatchEvent(new CustomEvent("wave:setState",{detail:"ACTIVE"}))');
+
+
+
+
+//how to dispatch events to set AI audio stream
+
+// attach media example
+_controller.runJavaScript('window.dispatchEvent(new CustomEvent("wave:attachMedia",{detail:{url:"https://cdn.com/stream.mp3",autoplay:true,loop:true,volume:1.0}}))')
+
+// later control it
+_controller.runJavaScript('window.dispatchEvent(new Event(“wave:mediaPlay"))')
+
+_controller.runJavaScript('window.dispatchEvent(new Event(“wave:mediaPause"))')
+
+_controller.runJavaScript('window.dispatchEvent(new CustomEvent(“wave:mediaVolume",{detail:{volume:0.5}}))')
+
+_controller.runJavaScript('window.dispatchEvent(new Event("wave:detachMedia"))')
